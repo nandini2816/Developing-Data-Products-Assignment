@@ -1,0 +1,47 @@
+
+Prediction Models for Iris dataset
+========================================================
+author: Nandini Nagar
+date: 04-07-2020
+autosize: true
+
+About dataset:
+========================================================
+The iris dataset contains four measurements for 150 flowers representing three species of iris (Iris setosa, versicolor and virginica).
+
+```{r,echo=FALSE}
+data(iris)
+str(iris)
+```
+Exploratory Plot
+========================================================
+
+```{r,echo=FALSE,fig.width=10}
+plot(iris$Petal.Width,iris$Sepal.Width,col=iris$Species,xlab = "Petal Width",
+ylab="Sepal Width",cex=2,pch=16)
+legend("topright",legend=c("Setosa","Versicolor","Virginica"),col=c("black","pink","green"),cex=2,pch=16)
+```
+
+About Prediction Models
+========================================================
+- I have used caret package to build the models.
+- The data has been split into training and test set for prediction purpose.
+- I have used two Prediction Models :
+   1. Random Forest
+   2. Linear Discriminant Analysis
+- The out of sample accuracy and some plots have been embedded in the shiny app.
+
+Some Code
+========================================================
+```{r, eval=FALSE}
+inTrain<-createDataPartition(iris$Species,p=.7,list=FALSE)
+    training<-iris[inTrain,]
+    testing<-iris[-inTrain,]
+fit1<-train(Species~.,data=training,method="rf")
+fit2<-train(Species~.,data=training,method="lda")
+cm1<-confusionMatrix(predict(fit1,testing),testing$Species)
+cm2<-confusionMatrix(predict(fit2,testing),testing$Species)
+```
+
+Thank You
+========================================================
